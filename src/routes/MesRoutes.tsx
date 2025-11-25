@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "../pages/Home";
+import MonPanier from "../pages/MonPanier";
 import Sinscrire from "../pages/Sinscrire";
 import Connexion from "../pages/Connexion";
 import Produit from "../pages/Produits";
@@ -12,6 +13,7 @@ const MesRoutes = () =>{
     return(
         <Routes>
             <Route path="/" element={<Home/>} />
+            <Route path="/panier" element={<MonPanier />} />
             <Route path="/s'inscrire" element={<Sinscrire/>} />
             <Route path="/se_connecter" element={<Connexion/>} />
             <Route path="/produits" element={<Produit/>} />

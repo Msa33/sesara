@@ -3,10 +3,11 @@ import SésaraLogo from "../components/logo";
 import Champs from "./inputes";
 import { ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useCart } from "../context/CarteContext";
 
 function Header() {
   const [nav, setNav] = useState(false);
-
+  const { cart } = useCart();
   return (
     <header>
       <nav className="bg-[#FFF8E7] px-4 lg:px-6 py-3 shadow-md border-b-2 border-gray-300">
@@ -90,10 +91,12 @@ function Header() {
 
               {/* Panier */}
               <div className="relative">
-                <ShoppingCart className="w-10 h-10 text-[#8C5E3E]" />
-                <span className="absolute -top-2 -right-2 bg-red-600 text-white text-md font-bold w-5 h-5 flex items-center justify-center rounded-full">
-                  0
-                </span>
+                <Link to="/panier">
+                  <ShoppingCart className="w-10 h-10 text-[#8C5E3E]" />
+                  <span className="absolute -top-2 -right-2 bg-red-600 text-white text-md font-bold w-5 h-5 flex items-center justify-center rounded-full">
+                    {cart.length}
+                  </span>
+                </Link>
               </div>
             </div>
           </div>
