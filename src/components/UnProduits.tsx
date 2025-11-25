@@ -1,4 +1,3 @@
-import React from "react";
 import { useCart } from "../context/CarteContext";
 
 type ProduitProps = {
@@ -56,7 +55,7 @@ function UnProduit(props: ProduitProps) {
               {prix}
             </p>
             <del className="mt-0.5 text-xs sm:text-sm font-bold text-gray-500">
-              60.000 XAF
+              60.000
             </del>
           </div>
         </div>

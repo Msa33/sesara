@@ -8,6 +8,7 @@ import Apropos from "../pages/Apropos";
 import Réinitialisation from "../pages/Reinitialisation";
 import ContactPage from "../pages/ContactPage";
 import Dashboard from "../pages/Dashboard";
+import ValiderCommande from "../pages/ValiderCommande";
 
 const MesRoutes = () =>{
     return(
@@ -21,6 +22,7 @@ const MesRoutes = () =>{
             <Route path="/réinitialisation" element={<Réinitialisation/>} />
             <Route path="/contact" element={<ContactPage/>} /> 
             <Route path="/dashboard" element={<Dashboard/>} />
+            <Route path="/commande" element={<ValiderCommande/>} />
         </Routes>
     )
 }

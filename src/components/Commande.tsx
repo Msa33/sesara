@@ -1,141 +1,124 @@
 import { useState } from "react";
-import emailjs from "emailjs-com";
+import { useCart } from "../context/CarteContext";
+import Champs from "./inputes";
+import SésaraLogo from "./logo";
 
-type CommandeProps = {
-  cart: any[];
-  clearCart: () => void;
-};
+export default function Commander() {
+  const { cart, clearCart } = useCart();
 
-export default function Commande({ cart, clearCart }: CommandeProps) {
-  const [formData, setFormData] = useState({
-    nom: "",
-    email: "",
-    telephone: "",
-    adresse: "",
-  });
+  const [nom, setNom] = useState("");
+  const [email, setEmail] = useState("");
+  const [telephone, setTelephone] = useState("");
+  const [adresse, setAdresse] = useState("");
 
+  // Calcul du total
   const total = cart.reduce(
-    (sum, item) => sum + item.prix * item.quantity,
-    0
-  );
+  (sum, item) => sum + Number(item.prix.replace(/\s/g, '').replace('XAF', '')) * item.quantity,
+  0
+);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const validerCommande = () => {
+    if (!nom || !email || !telephone || !adresse) {
+      alert("Veuillez remplir tous les champs !");
+      return;
+    }
 
-  // Fonction pour envoyer l'email
-  const envoyerCommande = (e: React.FormEvent) => {
-    e.preventDefault();
+    alert(
+      "Commande validée !\n\n" +
+      "Nom: " + nom + "\n" +
+      "Email: " + email + "\n" +
+      "Téléphone: " + telephone + "\n" +
+      "Adresse: " + adresse + "\n\n" +
+      "Total: " + total + " XAF"
+    );
 
-    const templateParams = {
-      nom: formData.nom,
-      email_client: formData.email,
-      telephone: formData.telephone,
-      adresse: formData.adresse,
-      produits: cart
-        .map(
-          (item) =>
-            `${item.nomProduit} - ${item.quantity} x ${item.prix} XAF`
-        )
-        .join("\n"),
-      total: `${total} XAF`,
-      dest_email: "msaaht33@gmail.com",
-    };
-
-    emailjs
-      .send(
-        "VOTRE_SERVICE_ID",
-        "VOTRE_TEMPLATE_ID",
-        templateParams,
-        "VOTRE_PUBLIC_KEY"
-      )
-      .then(
-        () => {
-          alert("Commande envoyée avec succès !");
-          clearCart();
-        },
-        (error) => {
-          console.log(error);
-          alert("Erreur lors de l'envoi de la commande.");
-        }
-      );
+    // Vider le panier
+    clearCart();
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-2xl font-bold text-[#8C5E3E] mb-6">
-        Finaliser votre commande
-      </h1>
-
-      <div className="grid md:grid-cols-2 gap-6">
+    <div className="bg-[#FFF8E7] min-h-screen p-6">
+      <div className="max-w-4xl mx-auto">
+        <SésaraLogo />  
+        {/* Titre */}
+        <h1 className="text-3xl font-bold text-[#8C5E3E] text-center mb-8">
+          Finaliser la commande
+        </h1>
 
         {/* Formulaire */}
-        <form onSubmit={envoyerCommande} className="bg-white p-4 shadow rounded">
-          <h2 className="text-xl font-bold mb-4">Informations personnelles</h2>
+        <div className="bg-[#FFF8E7] shadow p-6 rounded-lg">
+          <h2 className="text-xl font-semibold mb-4">Informations du client</h2>
 
-          <input
+          <Champs
             type="text"
-            name="nom"
             placeholder="Nom complet"
-            className="w-full border p-2 mb-3 rounded"
-            onChange={handleChange}
-            required
+            className="bg-white w-full p-2 border rounded mb-4"
+            value={nom}
+            onChange={(e) => setNom(e.target.value)}
           />
 
-          <input
+          <Champs
             type="email"
-            name="email"
             placeholder="Adresse email"
-            className="w-full border p-2 mb-3 rounded"
-            onChange={handleChange}
-            required
+            className="bg-white w-full p-2 border rounded mb-4"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
 
-          <input
+          <Champs
             type="text"
-            name="telephone"
-            placeholder="Numéro de téléphone"
-            className="w-full border p-2 mb-3 rounded"
-            onChange={handleChange}
-            required
+            placeholder="Téléphone"
+            className=" bg-white w-full p-2 border rounded mb-4"
+            value={telephone}
+            onChange={(e) => setTelephone(e.target.value)}
           />
 
           <textarea
-            name="adresse"
             placeholder="Adresse de livraison"
-            className="w-full border p-2 mb-3 rounded"
-            rows={4}
-            onChange={handleChange}
-            required
+            className="bg-white w-full p-2 border rounded mb-4"
+            rows={3}
+            value={adresse}
+            onChange={(e) => setAdresse(e.target.value)}
           ></textarea>
-
-          <button
-            type="submit"
-            className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 font-bold"
-          >
-            Valider la commande
-          </button>
-        </form>
-
-        {/* Résumé du panier */}
-        <div className="bg-gray-100 p-4 shadow rounded">
-          <h2 className="text-xl font-bold mb-4">Résumé du panier</h2>
-
-          {cart.map((item, index) => (
-            <div key={index} className="flex justify-between mb-2">
-              <span>
-                {item.nomProduit} (x{item.quantity})
-              </span>
-              <span>{item.prix * item.quantity} XAF</span>
-            </div>
-          ))}
-
-          <hr className="my-4" />
-
-          <h3 className="text-lg font-bold">
-            Total : <span className="text-green-700">{total} XAF</span>
-          </h3>
         </div>
+
+        {/* Récap Panier */}
+        <div className="bg-[#FFF8E7] shadow p-6 rounded-lg mt-8">
+          <h2 className="text-xl font-semibold mb-4">Votre commande</h2>
+
+          {cart.length === 0 ? (
+            <p className="text-gray-600">Votre panier est vide.</p>
+          ) : (
+            <div className="space-y-3">
+              {cart.map((item, index) => (
+                <div
+                  key={index}
+                  className="flex justify-between border-b pb-2"
+                >
+                  <span>
+                    {item.nomProduit} × {item.quantity}
+                  </span>
+                  <span className="font-bold">
+                    {item.prix} XAF
+                  </span>
+                </div>
+              ))}
+
+              {/* Total */}
+              <div className="text-xl font-bold text-right mt-4">
+                Total : {total.toLocaleString()} XAF
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Bouton Valider */}
+        <button
+          onClick={validerCommande}
+          className="w-full mt-8 bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg"
+        >
+          Valider la commande
+        </button>
       </div>
     </div>
   );
