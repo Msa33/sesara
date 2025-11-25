@@ -2,7 +2,7 @@ import { useCart } from "../context/CarteContext";
 
 type ProduitProps = {
   nomProduit: string;
-  prix: string | number;
+  prix: string 
   image: string;
   poid: string;
 };
@@ -55,7 +55,7 @@ function UnProduit(props: ProduitProps) {
               {prix}
             </p>
             <del className="mt-0.5 text-xs sm:text-sm font-bold text-gray-500">
-              60.000
+              60.000 XAF
             </del>
           </div>
         </div>

@@ -11,7 +11,7 @@ function Login() {
   const [mail, setMail] = useState('')
   const [passe, setPasse] = useState('')
   const [errors, setErrors] = useState(false)
-  const [showLoader, setShowLoader] = useState(false)
+  const [showLoader] = useState(false)
   const naviguer = useNavigate();
 
 

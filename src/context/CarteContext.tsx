@@ -2,7 +2,7 @@ import { createContext, useContext, useState } from "react";
 
 type CartItem = {
   nomProduit: string;
-  prix: number | string;
+  prix: string;
   image: string;
   poid: string;
   quantity: number;
@@ -75,7 +75,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 export function useCart() {
   const context = useContext(CartContext);
   if (!context) {
-    throw new Error("useCart must be used within a CartProvider");
+    throw new Error("Le hook useCart doit être utilisé dans un fournisseur de panier");
   }
   return context;
 }
