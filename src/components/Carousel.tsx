@@ -7,7 +7,12 @@ import Sdoré from "../assets/Sdoré.png"
  
 export function SlideShow() {
   return (
-    <Carousel transition={{ duration: 2 }} className="rounded-xl">
+    <Carousel 
+        transition={{ type: "tween", duration: 2 }}
+        className="rounded-xl"
+        autoplay={false}
+        loop={true}
+              >
       <img
         src={sésaNoir}
         alt="image 1"

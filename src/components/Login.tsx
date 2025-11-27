@@ -6,6 +6,7 @@ import SésaraLogo from '../components/logo'
 import Champs from '../components/inputes'
 import { Link, useNavigate } from 'react-router-dom'
 import {users} from "../data/users" 
+import {admins} from "../data/admin"
 
 function Login() {
   const [mail, setMail] = useState('')
@@ -18,18 +19,26 @@ function Login() {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const userFind = users.find((us) => us.email === mail && us.password === passe );
+    const adminFind = admins.find((adm) => adm.email === mail && adm.password === passe );
     if (!mail) {
        setErrors(false)
        setMail('')
+       alert("Veuiller entrer votre mail")
     }else if (!passe) {
       setErrors(false)
       setPasse('')
+      alert("Veuillez entrer votre mot de passe")
     }else if(userFind){
       setErrors(true)
       naviguer("/dashboard")
+    }else if (adminFind){ 
+      setErrors(true)
+      naviguer("/admin_dashboard")
     }else{
       setErrors(false)
+      alert("Veuiller remplir les champs correctement")
     }
+
 
   }
 

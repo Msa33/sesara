@@ -9,6 +9,10 @@ import Réinitialisation from "../pages/Reinitialisation";
 import ContactPage from "../pages/ContactPage";
 import Dashboard from "../pages/Dashboard";
 import ValiderCommande from "../pages/ValiderCommande";
+import AdminDashboard from "../components/Admindashboard";
+import Orders from "../components/ListeCommande";
+import AddProduct from "../components/AjoutProduit";
+import ValidateDelivery from "../components/ValiderLivraison";
 
 const MesRoutes = () =>{
     return(
@@ -23,6 +27,11 @@ const MesRoutes = () =>{
             <Route path="/contact" element={<ContactPage/>} /> 
             <Route path="/dashboard" element={<Dashboard/>} />
             <Route path="/commande" element={<ValiderCommande/>} />
+            <Route path="/admin_dashboard" element={<AdminDashboard/>} />
+            <Route path="/admin" element={<Connexion/>} />
+            <Route path="/ajout_produit" element={<AddProduct/>} />
+            <Route path="/liste_commandes" element={<Orders/>} />
+            <Route path="/liste_livraisons" element={<ValidateDelivery/>} />
         </Routes>
     )
 }
